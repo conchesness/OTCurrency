@@ -8,10 +8,6 @@ import requests
 def dashboard():
     form = GiveForm.new()
 
-    print(form.recipient.data, type(form.recipient.data))
-    print(form.reason.data, type(form.reason.data))
-    print(form.category.data, type(form.category.data))
-
     #if request.method == 'POST' and form.validate():
     if request.method == 'POST':
 

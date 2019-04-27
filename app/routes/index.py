@@ -10,10 +10,8 @@ google_auth = GoogleClient(
     client_id=("1048349222266-n5praijtbm6a7buc893avtvmtr0k301p"
                ".apps.googleusercontent.com"),
     client_secret="gAarFeNq1vKtGXaxo96FS5H0",
-    # redirect_uri="http://localhost:5000/oauth2callback"
-    redirect_uri="http://otcurrency.appspot.com/oauth2callback"
-    # "http://localhost:5000/oauth2callback"
-    # "https://computerinv-216303.appspot.com/oauth2callback"
+    redirect_uri="http://localhost:5000/oauth2callback"
+    # redirect_uri="http://otcurrency.appspot.com/oauth2callback"
 )
 
 @app.route('/', methods=['GET', 'POST'])
@@ -105,7 +103,8 @@ def login():
 
     # TODO: change this to a 'get' so it doesn't iterate ovar all users
     # probably need to store the unique googleID string in the User table
-    for i in User.objects:
+    userObjs = User.objects()
+    for i in userObjs:
         if i.name == session["displayName"]:
             session["wallet"] = i.wallet
             session["reputation"] = i.reputation
