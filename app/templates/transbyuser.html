@@ -19,7 +19,7 @@
       </td>
       <td>
         {% if given.createdate %}
-        {{given.createdate.strftime('%Y-%m-%d %I:%M.%S%p')}}
+        {{given.createdate.strftime('%m-%d-%Y %I:%M.%S%p')}}
         {% endif %}
       </td>
     </tr>
@@ -40,7 +40,7 @@
       </td>
       <td>
         {% if recipient.createdate %}
-        {{recipient.createdate.strftime('%Y-%m-%d %I:%M.%S%p')}}
+          {{recipient.createdate.strftime('%m-%d-%Y %I:%M.%S%p')}}
         {% endif %}
       </td>
     </tr>

@@ -53,6 +53,9 @@
                 {% if transaction.thanks %}
                   {{transaction.recipient.name}} says <b>Thanks!</b>
                 {% endif %}
+                {% if transaction.createdate %}
+                  {{transaction.createdate.strftime('%m-%d-%Y %I:%M.%S%p')}}
+                {% endif %}
               </small>
           </li>
           {% endfor %}

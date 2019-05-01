@@ -24,7 +24,7 @@ def index():
     totalMoney = 0
     for transaction in ledgerTransactions:
         totalMoney += transaction.amount
-    totalTransactions = len(list(Transaction.objects))
+    totalTransactions = len(list(Transaction.objects.order_by('-createdate')))
 
     # leaderboardUsers = list(User.objects.order_by('-reputation')[:9])
     leaderboardUsers = User.objects.order_by('-reputation')
