@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block body %}
+<img src="{{user.image}}">
 <table class="table">
 <tr><td colspan=3><h2>Given by {{user.name}}</h2></td></tr>
 
-    <tr><th>Recipient</th><th>amount</th><th>reason</th></tr>
+    <tr><th>Recipient</th><th>amount</th><th>reason</th><th>Date</th></tr>
   {% for given in giver %}
     <tr>
       <td>
@@ -16,11 +17,16 @@
       <td>
         {{given.reason}}
       </td>
+      <td>
+        {% if given.createdate %}
+        {{given.createdate.strftime('%Y-%m-%d %I:%M.%S%p')}}
+        {% endif %}
+      </td>
     </tr>
   {% endfor %}
 
 <tr><td colspan=3><h2>Received by {{user.name}}</h2></td></tr>
-    <tr><th>Giver</th><th>amount</th><th>reason</th></tr>
+    <tr><th>Giver</th><th>amount</th><th>reason</th><th>Date</th></tr>
   {% for recipient in received %}
     <tr>
       <td>
@@ -31,6 +37,11 @@
       </td>
       <td>
         {{recipient.reason}}
+      </td>
+      <td>
+        {% if recipient.createdate %}
+        {{recipient.createdate.strftime('%Y-%m-%d %I:%M.%S%p')}}
+        {% endif %}
       </td>
     </tr>
   {% endfor %}

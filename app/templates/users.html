@@ -2,15 +2,15 @@
 
 {% block body %}
   <table class="table">
-    <tr><th></th><th></th><th>Name</th></tr>
+    <tr><th width="150"></th><th>Name</th></tr>
   {% for user in users %}
     <tr>
       <td>
         <a href="/transactions/{{user.id}}">transactions</a>
       </td>
-      <td>
+      <!-- <td>
         <img src="{{user.image}}">
-      </td>
+      </td> -->
       <td>
         {{user.name}}
       </td>

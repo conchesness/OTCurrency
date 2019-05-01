@@ -11,8 +11,8 @@ def users():
 
 @app.route('/transactions/<userID>')
 def transactionsbyusers(userID):
-    received = Transaction.objects(recipient=userID)
-    giver = Transaction.objects(giver=userID)
+    received = Transaction.objects(recipient=userID).order_by('-createdate')
+    giver = Transaction.objects(giver=userID).order_by('-createdate')
     user = User.objects.get(pk=userID)
 
     return render_template('transbyuser.html', received=received, giver=giver, user=user)

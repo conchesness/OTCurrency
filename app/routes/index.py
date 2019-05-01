@@ -10,8 +10,8 @@ google_auth = GoogleClient(
     client_id=("1048349222266-n5praijtbm6a7buc893avtvmtr0k301p"
                ".apps.googleusercontent.com"),
     client_secret="gAarFeNq1vKtGXaxo96FS5H0",
-    # redirect_uri="http://localhost:5000/oauth2callback"
-    redirect_uri="http://otcurrency.appspot.com/oauth2callback"
+    redirect_uri="http://localhost:5000/oauth2callback"
+    # redirect_uri="http://otcurrency.appspot.com/oauth2callback"
     # "http://localhost:5000/oauth2callback"
     # "https://computerinv-216303.appspot.com/oauth2callback"
 )
@@ -130,6 +130,7 @@ def login():
         newTransaction.amount = 10
         newTransaction.reason = "New User"
         newTransaction.category = "New User"
+        newTransaction.createdate = datetime.now()
         newTransaction.save()
         flash("New User created! Welcome. ")
     return redirect("/")
