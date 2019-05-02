@@ -16,6 +16,7 @@ google_auth = GoogleClient(
     # "https://computerinv-216303.appspot.com/oauth2callback"
 )
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     ledgerTransactions = Transaction.objects.order_by('-createdate')
@@ -28,19 +29,21 @@ def index():
 
     # leaderboardUsers = list(User.objects.order_by('-reputation')[:9])
     leaderboardUsers = User.objects.order_by('-reputation')
-    #get the categories that have been used
-    #and how many transactions of that Category
+    # get the categories that have been used
+    # and how many transactions of that Category
     categoryList = Counter([transaction.category for transaction in Transaction.objects])
     categories = [[category,categoryList[category]] for category in categoryList]
 
-
     return render_template('index.html',
-                            ledgerTransactions=ledgerTransactions, leaderboardUsers=leaderboardUsers,
-                            totalMoney = str(totalMoney), totalRep = str(totalMoney), totalTransactions = str(totalTransactions),
-                            categories = categories)
+                           ledgerTransactions=ledgerTransactions, leaderboardUsers=leaderboardUsers,
+                           totalMoney=str(totalMoney), totalRep=str(totalMoney),
+                           totalTransactions=str(totalTransactions),
+                           categories=categories)
+
 
 @app.route('/transvote/<transID>/<vote>')
-def transvote(transID,vote):
+def transvote(transID, vote):
+    currUser = User.objects.get(pk=transID)
     transaction = Transaction.objects.get(pk=transID)
     currUser.reload()
 
@@ -59,7 +62,7 @@ def transvote(transID,vote):
         if vote == "up":
             if transaction.upvote:
                 upvotes = transaction.upvote + 1
-                transaction.reload
+                transaction.reload()
                 transaction.update(upvote=upvotes)
             else:
                 transaction.reload()
@@ -73,9 +76,10 @@ def transvote(transID,vote):
                 transaction.reload()
                 transaction.update(downvote=1)
 
-        transaction.update(push__voters=userObj.pk)
+        transaction.update(push__voters=currUser.pk)
 
     return redirect("/")
+
 
 @app.route('/login')
 def login():
@@ -99,7 +103,7 @@ def login():
     # TODO: change this to a 'get' so it doesn't iterate ovar all users
     # probably need to store the unique googleID string in the User table
 
-    #If the user exists, update sme stuff
+    # If the user exists, update sme stuff
     try:
         editUser = User.objects.get(name=session["displayName"])
         session["wallet"] = editUser.wallet
@@ -107,23 +111,23 @@ def login():
         # next lines inject some google values in to the User table. This code will only be needed
         # for updates eventually as the same values are created for new users.
         editUser.reload()
-        editUser.update(email = data["emails"][0]["value"],googleid = data["id"],image=session["image"])
+        editUser.update(email=data["emails"][0]["value"], googleid = data["id"], image=session["image"])
         flash(f'{session["displayName"]} successfully logged in to an existing account.')
         return redirect("/")
     except:
-        #if the user does not exists, create it
+        # if the user does not exists, create it
 
         newUser = User()
         newUser.name = session["displayName"]
         newUser.image = session["image"]
         newUser.email = data["emails"][0]["value"]
         newUser.googleid = data["id"]
-        #instead of giving 10 here we should create a transaction of 10 given by "the system"
+        # instead of giving 10 here we should create a transaction of 10 given by "the system"
         newUser.wallet = "0"
         newUser.reputation = "0"
         newUser.save()
         newUser.reload()
-        #This creates a new transaction given 10 to the New User (from the newUser)
+        # This creates a new transaction given 10 to the New User (from the newUser)
         newTransaction = Transaction()
         newTransaction.giver = newUser.id
         newTransaction.recipient = newUser.id

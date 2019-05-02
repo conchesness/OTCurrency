@@ -9,7 +9,7 @@
   {% for given in giver %}
     <tr>
       <td>
-        {{given.recipient.name}}
+          <a href={{ "/transactions/%s" % given.recipient.id }}>{{given.recipient.name}}</a>
       </td>
       <td>
         {{given.amount}}
@@ -30,7 +30,7 @@
   {% for recipient in received %}
     <tr>
       <td>
-        {{recipient.giver.name}}
+          <a href={{ "/transactions/%s" % recipient.giver.id }}>{{recipient.giver.name}}</a>
       </td>
       <td>
         {{recipient.amount}}
