@@ -44,17 +44,18 @@
               </h5>
             </div>
             <p class="mb-1">Reason: {{transaction.reason}}</p>
-
+            {% if transaction.thanks %}
+              <hr>
+              <i>{{transaction.recipient.name}} says <b>Thanks!</b></i>
+              <hr>
+            {% endif %}
               <small><a href="/transvote/{{transaction.id}}/up"><img width="15" src="/static/tup.png"></a> ({{transaction.upvote}})
                 <a href="/transvote/{{transaction.id}}/down"><img width="15" src="/static/tdown.png"></a> ({{transaction.downvote}})
 
                 Category: {{transaction.category}}
               <br>
-                {% if transaction.thanks %}
-                  {{transaction.recipient.name}} says <b>Thanks!</b>
-                {% endif %}
                 {% if transaction.createdate %}
-                  {{transaction.createdate.strftime('%m-%d-%Y %I:%M.%S%p')}}
+                  Transaction date: {{transaction.createdate.strftime('%m-%d-%Y %I:%M.%S%p')}}
                 {% endif %}
               </small>
           </li>
@@ -69,14 +70,12 @@
           <thead>
             <tr>
               <th scope="col">Total Money Transferred</th>
-              <th scope="col">Total Reputation Generated</th>
               <th scope="col">Total Transactions Completed</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th>{{totalMoney}}</th>
-              <th>{{totalRep}}</th>
               <th>{{totalTransactions}}</th>
             </tr>
           </tbody>
