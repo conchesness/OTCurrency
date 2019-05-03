@@ -29,33 +29,26 @@ def index():
 
     # leaderboardUsers = list(User.objects.order_by('-reputation')[:9])
     leaderboardUsers = User.objects.order_by('-reputation')
-<<<<<<< HEAD
+
     
     #get the categories that have been used
     #and how many transactions of that Category
-=======
+
     # get the categories that have been used
     # and how many transactions of that Category
->>>>>>> ed85dd41fcdc1b6c00b0eeea799d40189f57d953
+
     categoryList = Counter([transaction.category for transaction in Transaction.objects])
     categories = [[category,categoryList[category]] for category in categoryList]
 
     return render_template('index.html',
-<<<<<<< HEAD
+
                             ledgerTransactions=ledgerTransactions, leaderboardUsers=leaderboardUsers,
                             totalMoney = str(totalMoney), totalTransactions = str(totalTransactions),
                             categories = categories)
-=======
-                           ledgerTransactions=ledgerTransactions, leaderboardUsers=leaderboardUsers,
-                           totalMoney=str(totalMoney), totalRep=str(totalMoney),
-                           totalTransactions=str(totalTransactions),
-                           categories=categories)
 
->>>>>>> ed85dd41fcdc1b6c00b0eeea799d40189f57d953
 
 @app.route('/transvote/<transID>/<vote>')
 def transvote(transID, vote):
-    currUser = User.objects.get(pk=transID)
     transaction = Transaction.objects.get(pk=transID)
     currUser = User.objects.get(googleid=session['googleID'])
 

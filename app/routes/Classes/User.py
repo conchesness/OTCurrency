@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, IntField, ReferenceField
+from mongoengine import Document, StringField, IntField
 
 
 class User(Document):
@@ -10,3 +10,4 @@ class User(Document):
     image = StringField()
     googleid = StringField()
     gaveto = StringField()
+
