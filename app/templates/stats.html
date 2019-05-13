@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+  <div class="jumbotron">
+        <h1>Output</h1>
+        <hr />
+        <img class="img-fluid" src={{url_for('static', filename='sample.png')}} />
+    </div>
+</div>
+{% endblock %}
