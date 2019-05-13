@@ -44,7 +44,6 @@ def index():
 
 @app.route('/transvote/<transID>/<vote>')
 def transvote(transID, vote):
-    currUser = User.objects.get(pk=transID)
     transaction = Transaction.objects.get(pk=transID)
     currUser = User.objects.get(googleid=session['googleID'])
 
