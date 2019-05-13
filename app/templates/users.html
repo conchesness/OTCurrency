@@ -1,91 +1,13 @@
 {% extends "base.html" %}
 
 {% block body %}
-  <table class='table'>
-    <tr>
-      <td>
-        <a href='/users'>All</a>
-      </td>
-      <td>
-        <a href='/userstartswith/a'>A</a>
-      </td>
-      <td>
-        <a href='/userstartswith/b'>B</a>
-      </td>
-      <td>
-        <a href='/userstartswith/c'>C</a>
-      </td>
-      <td>
-        <a href='/userstartswith/d'>D</a>
-      </td>
-      <td>
-        <a href='/userstartswith/e'>E</a>
-      </td>
-      <td>
-        <a href='/userstartswith/f'>F</a>
-      </td>
-      <td>
-        <a href='/userstartswith/g'>G</a>
-      </td>
-      <td>
-        <a href='/userstartswith/h'>H</a>
-      </td>
-      <td>
-        <a href='/userstartswith/i'>I</a>
-      </td>
-      <td>
-        <a href='/userstartswith/j'>J</a>
-      </td>
-      <td>
-        <a href='/userstartswith/k'>K</a>
-      </td>
-      <td>
-        <a href='/userstartswith/l'>L</a>
-      </td>
-      <td>
-        <a href='/userstartswith/m'>M</a>
-      </td>
-      <td>
-        <a href='/userstartswith/n'>N</a>
-      </td>
-      <td>
-        <a href='/userstartswith/o'>O</a>
-      </td>
-      <td>
-        <a href='/userstartswith/p'>P</a>
-      </td>
-      <td>
-        <a href='/userstartswith/q'>Q</a>
-      </td>
-      <td>
-        <a href='/userstartswith/r'>R</a>
-      </td>
-      <td>
-        <a href='/userstartswith/s'>S</a>
-      </td>
-      <td>
-        <a href='/userstartswith/t'>T</a>
-      </td>
-      <td>
-        <a href='/userstartswith/u'>U</a>
-      </td>
-      <td>
-        <a href='/userstartswith/v'>V</a>
-      </td>
-      <td>
-        <a href='/userstartswith/w'>W</a>
-      </td>
-      <td>
-        <a href='/userstartswith/x'>X</a>
-      </td>
-      <td>
-        <a href='/userstartswith/y'>Y</a>
-      </td>
-      <td>
-        <a href='/userstartswith/z'>Z</a>
-      </td>
-    </tr>
-  </table>
+  {% if letters %}
+    <h4>
+    {% for letter in letters %}
+      <a href='/userstartswith/{{letter}}'>{{letter}}</a>&nbsp;&nbsp;&nbsp;
+    {% endfor %}
+    </h4>
+  {% endif %}
   <table class="table">
     <tr><th>Reputation</th><th>Name</th></tr>
   {% for user in users.items %}

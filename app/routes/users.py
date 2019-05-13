@@ -6,10 +6,15 @@ import requests
 @app.route('/users')
 @app.route('/users/<page>')
 def users(page=1):
+    alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+    letters = []
+    for letter in alphabet:
+        if User.objects(name__istartswith=letter).count() > 0:
+            letters.append(letter)
     paginatedUsers = User.objects.order_by('+name').paginate(page=int(page),per_page=12)
     # paginatedUsers = User.objects.paginate(page=1, per_page=10).order_by('+name')
 
-    return render_template('users.html',users=paginatedUsers)
+    return render_template('users.html',users=paginatedUsers,letters=letters)
 
 @app.route('/transactions/<userID>')
 def transactionsbyusers(userID):
@@ -21,6 +26,11 @@ def transactionsbyusers(userID):
 
 @app.route('/userstartswith/<alpha>')
 def userstartswith(alpha):
+    alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+    letters = []
+    for letter in alphabet:
+        if User.objects(name__istartswith=letter).count() > 0:
+            letters.append(letter)
     alphaUsers = User.objects(name__istartswith=alpha).paginate(page=1,per_page=10)
 
-    return render_template('users.html',users=alphaUsers,page=1)
+    return render_template('users.html',users=alphaUsers,letters=letters)
