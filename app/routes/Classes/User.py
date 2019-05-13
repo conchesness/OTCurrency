@@ -1,7 +1,8 @@
+import flask_mongoengine as mgo
 from mongoengine import Document, StringField, IntField
 
 
-class User(Document):
+class User(mgo.Document):
     name = StringField(unique=True)
     email = StringField()
     student_id = StringField()
@@ -10,4 +11,3 @@ class User(Document):
     image = StringField()
     googleid = StringField()
     gaveto = StringField()
-

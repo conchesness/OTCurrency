@@ -1,21 +1,124 @@
 {% extends "base.html" %}
 
 {% block body %}
-  <table class="table">
-    <tr><th width="150"></th><th>Name</th></tr>
-  {% for user in users %}
+  <table class='table'>
     <tr>
       <td>
-        <a href="/transactions/{{user.id}}">transactions</a>
+        <a href='/users'>All</a>
       </td>
-      <!-- <td>
-        <img src="{{user.image}}">
-      </td> -->
       <td>
-        {{user.name}}
+        <a href='/userstartswith/a'>A</a>
+      </td>
+      <td>
+        <a href='/userstartswith/b'>B</a>
+      </td>
+      <td>
+        <a href='/userstartswith/c'>C</a>
+      </td>
+      <td>
+        <a href='/userstartswith/d'>D</a>
+      </td>
+      <td>
+        <a href='/userstartswith/e'>E</a>
+      </td>
+      <td>
+        <a href='/userstartswith/f'>F</a>
+      </td>
+      <td>
+        <a href='/userstartswith/g'>G</a>
+      </td>
+      <td>
+        <a href='/userstartswith/h'>H</a>
+      </td>
+      <td>
+        <a href='/userstartswith/i'>I</a>
+      </td>
+      <td>
+        <a href='/userstartswith/j'>J</a>
+      </td>
+      <td>
+        <a href='/userstartswith/k'>K</a>
+      </td>
+      <td>
+        <a href='/userstartswith/l'>L</a>
+      </td>
+      <td>
+        <a href='/userstartswith/m'>M</a>
+      </td>
+      <td>
+        <a href='/userstartswith/n'>N</a>
+      </td>
+      <td>
+        <a href='/userstartswith/o'>O</a>
+      </td>
+      <td>
+        <a href='/userstartswith/p'>P</a>
+      </td>
+      <td>
+        <a href='/userstartswith/q'>Q</a>
+      </td>
+      <td>
+        <a href='/userstartswith/r'>R</a>
+      </td>
+      <td>
+        <a href='/userstartswith/s'>S</a>
+      </td>
+      <td>
+        <a href='/userstartswith/t'>T</a>
+      </td>
+      <td>
+        <a href='/userstartswith/u'>U</a>
+      </td>
+      <td>
+        <a href='/userstartswith/v'>V</a>
+      </td>
+      <td>
+        <a href='/userstartswith/w'>W</a>
+      </td>
+      <td>
+        <a href='/userstartswith/x'>X</a>
+      </td>
+      <td>
+        <a href='/userstartswith/y'>Y</a>
+      </td>
+      <td>
+        <a href='/userstartswith/z'>Z</a>
+      </td>
+    </tr>
+  </table>
+  <table class="table">
+    <tr><th>Reputation</th><th>Name</th></tr>
+  {% for user in users.items %}
+    <tr>
+      <td width=100 align='center'>
+        {% if user.reputation > 0 %}
+          <h4>{{user.reputation}}</h4>
+        {% endif %}
+      </td>
+      <td>
+        <h4><a href="/transactions/{{user.id}}">{{user.name}}</a></h4>
       </td>
     </tr>
   {% endfor %}
   </table>
+
+{# Macro for creating navigation links #}
+{% macro render_navigation(pagination, users) %}
+  <div class=pagination>
+  {% for page in pagination.iter_pages() %}
+    {% if page %}
+      {% if page != pagination.page %}
+        <h4><a href="{{ url_for(users, page=page) }}">{{ page }}&nbsp;&nbsp;&nbsp;</a></h4>
+      {% else %}
+        <h4><strong>{{ page }}&nbsp;&nbsp;&nbsp;</strong></h4>
+      {% endif %}
+    {% else %}
+      <span class=ellipsis>…</span>
+    {% endif %}
+  {% endfor %}
+  </div>
+{% endmacro %}
+
+{{ render_navigation(users, 'users') }}
 
 {% endblock %}
