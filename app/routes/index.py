@@ -8,7 +8,6 @@ from collections import Counter
 @app.route('/', methods=['GET', 'POST'])
 def index():
     ledgerTransactions = Transaction.objects.order_by('-createdate')
-
     # get totalmoney
     totalMoney = 0
     for transaction in ledgerTransactions:

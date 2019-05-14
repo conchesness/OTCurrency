@@ -1,5 +1,6 @@
 from mongoengine import Document, StringField, ReferenceField, IntField, SortedListField, BooleanField, DateTimeField
 import mongoengine as mgo
+from datetime import datetime
 from .User import User
 
 
@@ -13,7 +14,7 @@ class Transaction(mgo.Document):
     downvote = IntField()
     voters = SortedListField(ReferenceField(User), ordering='name')
     thanks = BooleanField()
-    createdate = DateTimeField()
+    createdate = DateTimeField(default=datetime.utcnow())
     meta = {
         'ordering': ['+createdate']
     }

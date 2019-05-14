@@ -9,13 +9,21 @@
     {% endfor %}
     </h4>
   {% endif %}
-  <table class="table">
-    <tr><th>Name (rep)</th></tr>
+  <table class="table table-striped">
+    <tr><th>Name</th><th>Reputation</th><th>Wallet</th><th># of Transactions</th></tr>
   {% for user in users.items %}
     <tr>
       <td>
-        <h4><a href="/transactions/{{user.id}}">{{user.lname}}, {{user.fname}}</a>
-            {% if user.reputation > 0 %}({{user.reputation}}){% endif %}</h4>
+        <h4><a href="/transactions/{{user.id}}">{{user.lname}}, {{user.fname}}</a></h4>
+      </td>
+      <td>
+        <h4>{{user.reputation}}</h4>
+      </td>
+      <td>
+        <h4>{{user.wallet}}</h4>
+      </td>
+      <td>
+        <h4>{{user.numtrans}}</h4>
       </td>
     </tr>
   {% endfor %}

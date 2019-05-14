@@ -10,6 +10,11 @@ class User(mgo.Document):
     student_id = StringField()
     wallet = IntField()
     reputation = IntField()
+    numtrans = IntField()
     image = StringField()
     googleid = StringField()
     gaveto = StringField()
+
+    meta = {
+        'ordering': ['+lname','+fname']
+    }

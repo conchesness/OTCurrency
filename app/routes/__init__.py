@@ -1,8 +1,8 @@
 from app import app
 
-from .index import index
-from .dashboard import dashboard
-from .about import about
-from .users import users
-from .login import login
+from .index import *
+from .dashboard import *
+from .about import *
+from .users import *
+from .login import *
 from .scripts import *

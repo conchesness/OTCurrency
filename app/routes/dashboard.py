@@ -22,8 +22,7 @@ def dashboard():
         if (currUser.name != form.recipient.data):
             validTransaction = True
         else:
-            flash("You can't give it to yourself, " +
-                  giver.name[0:giver.name.find(" ")])
+            flash(f"hey {currUser.fname}, you can't give it to yourself.")
             return redirect("/dashboard")
 
         # check if giver has enough money
