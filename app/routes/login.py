@@ -10,8 +10,8 @@ google_auth = GoogleClient(
     client_id=("1048349222266-n5praijtbm6a7buc893avtvmtr0k301p"
                ".apps.googleusercontent.com"),
     client_secret="gAarFeNq1vKtGXaxo96FS5H0",
-    redirect_uri="http://localhost:5000/oauth2callback"
-    # redirect_uri="http://otcurrency.appspot.com/oauth2callback"
+    # redirect_uri="http://localhost:5000/oauth2callback"
+    redirect_uri="http://otcurrency.appspot.com/oauth2callback"
     # "http://localhost:5000/oauth2callback"
     # "https://computerinv-216303.appspot.com/oauth2callback"
 )
@@ -78,8 +78,14 @@ def login():
         newTransaction.amount = 10
         newTransaction.reason = "Welcome to OTCurrency!"
         newTransaction.category = "New User"
-        # newTransaction.createdate = datetime.now()
         newTransaction.save()
+
+        # Now set the wallet, reputation and numtrans calues for the new user
+        newUser.reload()
+        newUserReceived=Transaction.objects(giver=newUser.id).sum('amount')
+        newUserGiven=Transaction.objects(recipient=newUser.id).sum('amount')
+        numTrans=Transaction.objects(giver=newUser.id).count()+Transaction.objects(recipient=newUser.id).count()
+        newUser.update(wallet=newUserReceived-newUserGiven,numtrans=numTrans, reputation=newUserGiven)
         flash(f'New user transaction ID#: {newTransaction.id} was just created.')
 
     return redirect("/")

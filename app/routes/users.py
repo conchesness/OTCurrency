@@ -13,20 +13,22 @@ def users(page=1):
             letters.append(letter)
 
     # update transaction values on user objects
-    allUsers=User.objects()
-    for user in allUsers:
-        user.reload()
-        amtReceived = Transaction.objects(recipient=user.id).sum('amount')
-        amtGiven = Transaction.objects(giver=user.id).sum('amount')
-        numReceived = Transaction.objects(recipient=user.id).count()
-        numGiven = Transaction.objects(giver=user.id).count()
-        numtrans=numReceived+numGiven
-        wallet=amtReceived+amtGiven
-        user.update(wallet=wallet,reputation=amtReceived,numtrans=numtrans)
+    # allUsers=User.objects()
+    # for user in allUsers:
+    #     user.reload()
+    #     amtReceived = Transaction.objects(recipient=user.id).sum('amount')
+    #     amtGiven = Transaction.objects(giver=user.id).sum('amount')
+    #     numReceived = Transaction.objects(recipient=user.id).count()
+    #     numGiven = Transaction.objects(giver=user.id).count()
+    #     numtrans=numReceived+numGiven
+    #     wallet=amtReceived+amtGiven
+    #     user.update(wallet=wallet,reputation=amtReceived,numtrans=numtrans)
 
     paginatedUsers = User.objects.order_by('+lname').paginate(page=int(page),per_page=10)
     if User.objects.count() > 10:
         paginate=1
+    else:
+        paginate=0
 
     return render_template('users.html',users=paginatedUsers,letters=letters,paginate=paginate)
 

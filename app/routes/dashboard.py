@@ -10,9 +10,6 @@ from mongoengine.queryset.visitor import Q
 def dashboard():
     form = GiveForm.new()
     currUser = User.objects.get(googleid=session['googleID'])
-    given = Transaction.objects(giver=currUser.id).sum('amount')
-    received = Transaction.objects(recipient=currUser.id).sum('amount')
-    myWallet = received-given
 
     #if request.method == 'POST' and form.validate():
     if request.method == 'POST' and form.validate():
@@ -72,14 +69,16 @@ def dashboard():
     userTransactions = Transaction.objects(Q(giver=currUser.id) | Q(recipient=currUser.id))
     received = Transaction.objects(recipient=currUser.id).sum('amount')
     given = Transaction.objects(giver=currUser.id).sum('amount')
-    countTrans = Transaction.objects.count()
     myWallet = received-given
-    currUser.update(wallet=myWallet,reputation=given)
+    numReceived = Transaction.objects(recipient=currUser.id).count()
+    numGiven = Transaction.objects(giver=currUser.id).count()
+    numtrans=numReceived+numGiven
+    currUser.update(wallet=myWallet,reputation=given, numtrans=numtrans)
     session["wallet"] = myWallet
     session["reputation"] = given
 
     #form.recipient.choices = [(row.name, row.name) for row in User.objects()]
 
     return render_template('dashboard.html', wallet=myWallet, reputation=given,
-                            form=form, totalTransactions = countTrans, userTransactions = userTransactions,
+                            form=form, totalTransactions = numtrans, userTransactions = userTransactions,
                             user=currUser)
