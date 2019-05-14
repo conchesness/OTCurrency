@@ -3,8 +3,9 @@
 {% block body %}
   {% if letters %}
     <h4>
+    <a href="/users">All</a>&nbsp;&nbsp;&nbsp;
     {% for letter in letters %}
-      <a href='/userstartswith/{{letter}}'>{{letter}}</a>&nbsp;&nbsp;&nbsp;
+      <a href='/userstartswith/{{letter}}'>{{letter.upper()}}</a>&nbsp;&nbsp;&nbsp;
     {% endfor %}
     </h4>
   {% endif %}
@@ -24,15 +25,19 @@
   {% endfor %}
   </table>
 
+
 {# Macro for creating navigation links #}
 {% macro render_navigation(pagination, users) %}
   <div class=pagination>
+  <h4>Pages:&nbsp;</h4>
   {% for page in pagination.iter_pages() %}
     {% if page %}
+      {% if paginate == 1 %}
       {% if page != pagination.page %}
-        <h4><a href="{{ url_for(users, page=page) }}">{{ page }}&nbsp;&nbsp;&nbsp;</a></h4>
+        <h4><a href="{{ url_for(users, page=page) }}">{{ page }}</a>&nbsp;&nbsp;&nbsp;</h4>
       {% else %}
-        <h4><strong>{{ page }}&nbsp;&nbsp;&nbsp;</strong></h4>
+        <h4><strong>{{ page }}</strong>&nbsp;&nbsp;&nbsp;</h4>
+      {% endif %}
       {% endif %}
     {% else %}
       <span class=ellipsis>…</span>

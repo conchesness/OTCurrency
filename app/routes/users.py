@@ -11,10 +11,11 @@ def users(page=1):
     for letter in alphabet:
         if User.objects(name__istartswith=letter).count() > 0:
             letters.append(letter)
-    paginatedUsers = User.objects.order_by('+name').paginate(page=int(page),per_page=12)
-    # paginatedUsers = User.objects.paginate(page=1, per_page=10).order_by('+name')
+    paginatedUsers = User.objects.order_by('+name').paginate(page=int(page),per_page=10)
+    if User.objects.count() > 10:
+        paginate=1
 
-    return render_template('users.html',users=paginatedUsers,letters=letters)
+    return render_template('users.html',users=paginatedUsers,letters=letters,paginate=paginate)
 
 @app.route('/transactions/<userID>')
 def transactionsbyusers(userID):
@@ -32,5 +33,9 @@ def userstartswith(alpha):
         if User.objects(name__istartswith=letter).count() > 0:
             letters.append(letter)
     alphaUsers = User.objects(name__istartswith=alpha).paginate(page=1,per_page=10)
+    if User.objects(name__istartswith=alpha).count() > 10:
+        paginate=1
+    else:
+        paginate=0
 
-    return render_template('users.html',users=alphaUsers,letters=letters)
+    return render_template('users.html',users=alphaUsers,letters=letters,paginate=paginate)
