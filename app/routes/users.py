@@ -1,6 +1,6 @@
 from app.routes import app
 from flask import render_template, session, request, redirect, flash
-from .Classes import Transaction, User
+from app.Data import Transaction, User
 import requests
 
 @app.route('/users')
@@ -9,9 +9,9 @@ def users(page=1):
     alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     letters = []
     for letter in alphabet:
-        if User.objects(name__istartswith=letter).count() > 0:
+        if User.objects(lname__istartswith=letter).count() > 0:
             letters.append(letter)
-    paginatedUsers = User.objects.order_by('+name').paginate(page=int(page),per_page=10)
+    paginatedUsers = User.objects.order_by('+lname').paginate(page=int(page),per_page=10)
     if User.objects.count() > 10:
         paginate=1
 
@@ -30,10 +30,10 @@ def userstartswith(alpha):
     alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     letters = []
     for letter in alphabet:
-        if User.objects(name__istartswith=letter).count() > 0:
+        if User.objects(lname__istartswith=letter).count() > 0:
             letters.append(letter)
-    alphaUsers = User.objects(name__istartswith=alpha).paginate(page=1,per_page=10)
-    if User.objects(name__istartswith=alpha).count() > 10:
+    alphaUsers = User.objects(lname__istartswith=alpha).paginate(page=1,per_page=10)
+    if User.objects(lname__istartswith=alpha).count() > 10:
         paginate=1
     else:
         paginate=0

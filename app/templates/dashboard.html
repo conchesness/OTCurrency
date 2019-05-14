@@ -16,10 +16,10 @@
         <hr />
         <div class="btn-group" role="group" aria-label="...">
           <button type="button" class="btn  btn-static">
-            <img class="rounded mx-auto d-block" height="40px" width="40px" src={{image}} />
+            <img class="rounded mx-auto d-block" height="40px" width="40px" src={{user.image}} />
           </button>
           <button type="button" class="btn btn-static">
-            <h4>{{name}}</h4>
+            <h4>{{user.name}}</h4>
           </button>
         </div>
         <div class="btn-group" role="group" aria-label="...">
@@ -31,7 +31,7 @@
           </button>
         </div>
         <div>
-          <h5>Last gave to: {{gaveto}}</h5>
+          <h5>Last gave to: {{user.gaveto}}</h5>
         </div>
       </div>
       <div class="jumbotron">
@@ -65,28 +65,10 @@
       </div>
     </div>
     <div class="col-lg-6 col-md-12 col-sm-12">
-      <div class="jumbotron">
-        <h1 class="text-center">All-Time Stats</h1>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Total Money Transferred</th>
-              <th scope="col">Total Reputation Generated</th>
-              <th scope="col">Total Transactions Completed</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>{{totalMoney}}</th>
-              <th>{{totalRep}}</th>
-              <th>{{totalTransactions}}</th>
-            </tr>
-          </tbody>
-        </table>
-        <hr>
-      </div>
+
       <div class="jumbotron">
         <h1 class="text-center">Transaction History</h1>
+        <p class="text-center"><strong>Total Transaction: {{totalTransactions}}</strong></p>
         <hr />
         {% for transaction in userTransactions %}
           <li class="list-group-item list-group-item-action flex-column align-items-start">

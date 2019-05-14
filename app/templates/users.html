@@ -10,16 +10,12 @@
     </h4>
   {% endif %}
   <table class="table">
-    <tr><th>Reputation</th><th>Name</th></tr>
+    <tr><th>Name (rep)</th></tr>
   {% for user in users.items %}
     <tr>
-      <td width=100 align='center'>
-        {% if user.reputation > 0 %}
-          <h4>{{user.reputation}}</h4>
-        {% endif %}
-      </td>
       <td>
-        <h4><a href="/transactions/{{user.id}}">{{user.name}}</a></h4>
+        <h4><a href="/transactions/{{user.id}}">{{user.lname}}, {{user.fname}}</a>
+            {% if user.reputation > 0 %}({{user.reputation}}){% endif %}</h4>
       </td>
     </tr>
   {% endfor %}
@@ -29,7 +25,9 @@
 {# Macro for creating navigation links #}
 {% macro render_navigation(pagination, users) %}
   <div class=pagination>
-  <h4>Pages:&nbsp;</h4>
+  {% if paginate == 1 %}
+    <h4>Pages:&nbsp;</h4>
+  {% endif %}
   {% for page in pagination.iter_pages() %}
     {% if page %}
       {% if paginate == 1 %}

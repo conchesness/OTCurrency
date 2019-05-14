@@ -1,11 +1,12 @@
 from mongoengine import Document, StringField, ReferenceField, IntField, SortedListField, BooleanField, DateTimeField
+import mongoengine as mgo
 from .User import User
 
 
-class Transaction(Document):
+class Transaction(mgo.Document):
     giver = ReferenceField(User)
     recipient = ReferenceField(User)
-    amount = IntField()
+    amount = mgo.IntField(required='true')
     reason = StringField()
     category = StringField()
     upvote = IntField()
@@ -13,3 +14,6 @@ class Transaction(Document):
     voters = SortedListField(ReferenceField(User), ordering='name')
     thanks = BooleanField()
     createdate = DateTimeField()
+    meta = {
+        'ordering': ['+createdate']
+    }

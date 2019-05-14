@@ -1,13 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField, IntegerField
-from app.routes.Classes import User
+from wtforms import StringField, SubmitField, SelectField, IntegerField, validators, ValidationError
+from app.Data import User
 from flask import session
-from app.routes.Classes import User
 
 class GiveForm(FlaskForm):
-    amount = IntegerField("Amount")
+    amount = IntegerField("Amount", [validators.Required("Amount is required")])
     recipient = SelectField(label="To", choices=[(row.name, row.name) for row in User.objects()])
-    reason = StringField("Reason")
+    reason = StringField("Reason", [validators.Required('Reason is required')])
     category = SelectField(label="Category", choices = [('Helped others','Helped others'),('Did me a favor','Did me a favor'),('Did something for a teacher','Did something for a teacher'),('Class participation','Class participation'),('Community beautification','Community beautification')])
     submit = SubmitField("Submit")
 
