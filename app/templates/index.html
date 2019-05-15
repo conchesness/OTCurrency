@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="col-lg-7 col-md-12 col-sm-12">
       <div class="jumbotron">
         <h1 class="text-center">Latest Transactions</h1>
         <hr>
@@ -43,14 +43,15 @@
                 <div class="btn btn-medal">{{transaction.amount}}</div>
               </h5>
             </div>
-            <p class="mb-1">Reason: {{transaction.reason}}</p>
-            {% if transaction.thanks %}
-              <hr>
-              <i>{{transaction.recipient.name}} says <b>Thanks!</b></i>
-              <hr>
-            {% endif %}
-              <small><a href="/transvote/{{transaction.id}}/up"><img width="15" src="/static/tup.png"></a> ({{transaction.upvote}})
-                <a href="/transvote/{{transaction.id}}/down"><img width="15" src="/static/tdown.png"></a> ({{transaction.downvote}})
+            <p class="mb-1">
+              {% if transaction.thanks %}
+                <i>{{transaction.recipient.name}} says <b>Thanks!</b></i>
+              {% endif %}
+            </p>
+            <p class="mb-1">Category: {{transaction.category}}</p>
+
+              <small><a href="/transvote/{{transaction.id}}/up"><img width="15" src="/static/tup.png"></a> {% if transaction.upvote %}({{transaction.upvote}}){% endif %}
+                <a href="/transvote/{{transaction.id}}/down"><img width="15" src="/static/tdown.png"></a> {% if transaction.downvote %}({{transaction.downvote}}){% endif %}
 
                 Category: {{transaction.category}}
               <br>
@@ -63,7 +64,7 @@
         </ul>
       </div>
     </div>
-    <div class="col-lg-6 col-md-12 col-sm-12">
+    <div class="col-lg-5 col-md-12 col-sm-12">
       <div class="jumbotron">
         <h1 class="text-center">All-Time Stats</h1>
         <table class="table">

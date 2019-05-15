@@ -8,7 +8,7 @@ class GiveForm(FlaskForm):
     # recipient = SelectField(label="To", choices=[(row.name, row.name) for row in User.objects()])
     recipient = SelectField("To", [validators.Required('Reason is required')])
     reason = StringField("Reason", [validators.Required('Reason is required')])
-    category = SelectField(label="Category", choices = [('Helped others','Helped others'),('Helped me','Helped M'),('Helped our community','Helped our community')])
+    category = SelectField(label="Category", choices = [('Helped others','Helped others'),('Helped me','Helped me'),('Helped our community','Helped our community')])
     submit = SubmitField("Submit")
 
     # Class method to ensure that each time you instantiate and new form the user names
