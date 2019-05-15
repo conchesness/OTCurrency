@@ -33,3 +33,19 @@ def updatewallets():
             wallet=amtReceived+amtGiven
             user.update(wallet=wallet,reputation=amtGiven,numtrans=numtrans)
         return redirect(url_for('users'))
+
+# @app.route('/increasewallets')
+# def increasewallets():
+#     allUsers = User.objects()
+#     giver = User.objects.get(googleid="999999999")
+#     for user in allUsers:
+#         newTransaction = Transaction()
+#         newTransaction.recipient = user.id
+#         newTransaction.giver = giver.id
+#         newTransaction.amount = 40
+#         newTransaction.reason = 'Top Up'
+#         newTransaction.category = 'Top Up'
+#         newTransaction.save()
+#         flash(f'{giver.name} gave 40 to {user.name}')
+#
+#     return render_template('scripts.html')
