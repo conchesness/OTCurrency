@@ -6,9 +6,9 @@ from flask import session
 class GiveForm(FlaskForm):
     amount = IntegerField("Amount", [validators.Required("Amount is required")])
     # recipient = SelectField(label="To", choices=[(row.name, row.name) for row in User.objects()])
-    recipient = SelectField(label="To")
+    recipient = SelectField("To", [validators.Required('Reason is required')])
     reason = StringField("Reason", [validators.Required('Reason is required')])
-    category = SelectField(label="Category", choices = [('Helped others','Helped others'),('Did me a favor','Did me a favor'),('Did something for a teacher','Did something for a teacher'),('Class participation','Class participation'),('Community beautification','Community beautification')])
+    category = SelectField(label="Category", choices = [('Helped others','Helped others'),('Helped me','Helped M'),('Helped our community','Helped our community')])
     submit = SubmitField("Submit")
 
     # Class method to ensure that each time you instantiate and new form the user names

@@ -14,7 +14,8 @@ class Transaction(mgo.Document):
     downvote = IntField()
     voters = SortedListField(ReferenceField(User), ordering='name')
     thanks = BooleanField()
-    createdate = DateTimeField(default=datetime.utcnow())
+    # createdate = DateTimeField(default=datetime.now())
+    createdate = DateTimeField()
     meta = {
         'ordering': ['+createdate']
     }

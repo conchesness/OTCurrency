@@ -7,12 +7,9 @@ from collections import Counter
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    ledgerTransactions = Transaction.objects.order_by('-createdate')
-    # get totalmoney
-    totalMoney = 0
-    for transaction in ledgerTransactions:
-        totalMoney += transaction.amount
-    totalTransactions = len(list(Transaction.objects.order_by('-createdate')))
+    totalMoney=Transaction.objects.sum('amount')
+    totalTransactions = Transaction.objects.count()
+    ledgerTransactions=Transaction.objects[:20].order_by('-createdate')
 
     # leaderboardUsers = list(User.objects.order_by('-reputation')[:9])
     leaderboardUsers = User.objects.order_by('-reputation')
@@ -29,8 +26,9 @@ def index():
                            categories=categories)
 
 
+@app.route('/transvote/<transID>/<vote>/<dash>')
 @app.route('/transvote/<transID>/<vote>')
-def transvote(transID, vote):
+def transvote(transID, vote, dash='notdash'):
     transaction = Transaction.objects.get(pk=transID)
     currUser = User.objects.get(googleid=session['googleID'])
 
@@ -64,5 +62,7 @@ def transvote(transID, vote):
                 transaction.update(downvote=1)
 
         transaction.update(push__voters=currUser.pk)
-
-    return redirect("/")
+    if dash == "dash":
+        return redirect('/dashboard')
+    else:
+        return redirect("/")

@@ -1,6 +1,6 @@
 from app.routes import app
-from flask import render_template, session, redirect, request, flash
-from app.Data import User
+from flask import render_template, session, redirect, request, flash, url_for
+from app.Data import User, Transaction
 
 # @app.route('/fandlname')
 # def fandlname():
@@ -15,3 +15,21 @@ from app.Data import User
 #             editUser.update(fname=fname,lname=lname)
 #
 #     return render_template('scripts.html')
+
+@app.route('/updatewallets')
+def updatewallets():
+    #update transaction values on user objects
+    if not session.get("access_token"):
+        return redirect(url_for('login'))
+    else:
+        allUsers=User.objects()
+        for user in allUsers:
+            user.reload()
+            amtReceived = Transaction.objects(recipient=user.id).sum('amount')
+            amtGiven = Transaction.objects(giver=user.id).sum('amount')
+            numReceived = Transaction.objects(recipient=user.id).count()
+            numGiven = Transaction.objects(giver=user.id).count()
+            numtrans=numReceived+numGiven
+            wallet=amtReceived+amtGiven
+            user.update(wallet=wallet,reputation=amtGiven,numtrans=numtrans)
+        return redirect(url_for('users'))

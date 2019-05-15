@@ -67,8 +67,9 @@
     <div class="col-lg-6 col-md-12 col-sm-12">
 
       <div class="jumbotron">
-        <h1 class="text-center">Transaction History</h1>
-        <p class="text-center"><strong>Total Transaction: {{totalTransactions}}</strong></p>
+        <h1 class="text-center">Recent Transactions</h1>
+        <p class="text-center"><strong>Total Transaction: {{totalTransactions}}</strong><br/>
+        <a href="/transactions/{{user.id}}">All Transactions for {{user.name}}</a></p>
         <hr />
         {% for transaction in userTransactions %}
           <li class="list-group-item list-group-item-action flex-column align-items-start">
@@ -83,6 +84,17 @@
             </div>
             <p class="mb-1">Reason: {{transaction.reason}}</p>
             <small>Category: {{transaction.category}}</small>
+            {% if transaction.thanks %}
+              <hr>
+              <i>{{transaction.recipient.name}} says <b>Thanks!</b></i>
+              <hr>
+            {% endif %}
+              <small><a href="/transvote/{{transaction.id}}/up/dash"><img width="15" src="/static/tup.png"></a> ({{transaction.upvote}})
+              <br>
+                {% if transaction.createdate %}
+                  Transaction date: {{transaction.createdate.strftime('%m-%d-%Y %I:%M.%S%p')}}
+                {% endif %}
+              </small>
           </li>
         {% endfor %}
       </div>

@@ -4,7 +4,7 @@ from flask import render_template, session, redirect, request, flash
 from requests_oauth2.services import GoogleClient
 from requests_oauth2 import OAuth2BearerToken
 from app.Data import User, Transaction
-# from datetime import datetime
+from datetime import datetime
 
 google_auth = GoogleClient(
     client_id=("1048349222266-n5praijtbm6a7buc893avtvmtr0k301p"
@@ -70,14 +70,19 @@ def login():
         flash("New User created! Welcome. ")
         newUser.reload()
         # This creates a new transaction giving 10 to the New User (from the newUser)
+
         # Giver is Stephen Wright
-        newTransGiver=User.objects.get(googleid='118043475517321263044')
+        # newTransGiver=User.objects.get(googleid='118043475517321263044')
+
+        # Giver is the Undertaker
+        newTransGiver=User.objects.get(googleid='999999999')
         newTransaction = Transaction()
         newTransaction.giver = newTransGiver.id
         newTransaction.recipient = newUser.id
-        newTransaction.amount = 10
+        newTransaction.amount = 50
         newTransaction.reason = "Welcome to OTCurrency!"
         newTransaction.category = "New User"
+        newTransaction.createdate = datetime.now()
         newTransaction.save()
 
         # Now set the wallet, reputation and numtrans calues for the new user
