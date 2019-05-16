@@ -29,7 +29,7 @@
   <div class="row">
     <div class="col-lg-7 col-md-12 col-sm-12">
       <div class="jumbotron">
-        <h1 class="text-center">Latest Transactions</h1>
+        <h1 class="text-center">Last 20 Transactions</h1>
         <hr>
         <ul class="list-group">
           {% for transaction in ledgerTransactions %}
@@ -49,11 +49,14 @@
               {% endif %}
             </p>
             <p class="mb-1">Category: {{transaction.category}}</p>
+            <p class="mb-1 wordbreak">
+              <small>Reason: {{transaction.reason}}</small>
+            </p>
+
 
               <small><a href="/transvote/{{transaction.id}}/up"><img width="15" src="/static/tup.png"></a> {% if transaction.upvote %}({{transaction.upvote}}){% endif %}
                 <a href="/transvote/{{transaction.id}}/down"><img width="15" src="/static/tdown.png"></a> {% if transaction.downvote %}({{transaction.downvote}}){% endif %}
 
-                Category: {{transaction.category}}
               <br>
                 {% if transaction.createdate %}
                   Transaction date: {{transaction.createdate.strftime('%m-%d-%Y %I:%M.%S%p')}}
@@ -115,7 +118,7 @@
             {% for user in leaderboardUsers %}
             <tr>
               <th scope="row">{{loop.index}}</th>
-              <th>{{user.name}}</th>
+              <th><a href="/transactions/{{user.id}}">{{user.name}}</a></th>
               <td>{{user.reputation}}</td>
             </tr>
             {% endfor %}

@@ -2,6 +2,7 @@ from app.routes import app
 from flask import render_template, session, redirect, request, flash, url_for
 from app.Data import User, Transaction
 
+
 # @app.route('/fandlname')
 # def fandlname():
 #     if session.get("access_token"):
@@ -15,6 +16,20 @@ from app.Data import User, Transaction
 #             editUser.update(fname=fname,lname=lname)
 #
 #     return render_template('scripts.html')
+
+@app.route('/deletenegtrans')
+def deletenegtrans():
+    if not session.get("access_token"):
+        return redirect(url_for('login'))
+    else:
+        # Transaction.objects(amount__lte = 0).delete()
+        ltzero=Transaction.objects(amount__lte = 0).count()
+        flash(f'{ltzero}')
+        Transaction.objects(amount__lte = 0).delete()
+        ltzero=Transaction.objects(amount__lte = 0).count()
+        flash(f'{ltzero}')
+
+        return render_template('scripts.html')
 
 @app.route('/updatewallets')
 def updatewallets():

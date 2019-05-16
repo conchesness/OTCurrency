@@ -3,13 +3,15 @@ from app.routes import app
 from flask import render_template, session, redirect, request, flash
 from app.Data import User, Transaction
 from collections import Counter
+from mongoengine.queryset.visitor import Q
 
+undertaker = User.objects.get(googleid='999999999')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    totalMoney=Transaction.objects.sum('amount')
-    totalTransactions = Transaction.objects.count()
-    ledgerTransactions=Transaction.objects[:20].order_by('-createdate')
+    totalMoney=Transaction.objects(Q(giver__ne = undertaker.id) & Q(recipient__ne = undertaker.id)).sum('amount')
+    totalTransactions = Transaction.objects(Q(giver__ne = undertaker.id) & Q(recipient__ne = undertaker.id)).count()
+    ledgerTransactions=Transaction.objects(Q(giver__ne = undertaker.id) & Q(recipient__ne = undertaker.id))[:20].order_by('-createdate')
 
     # leaderboardUsers = list(User.objects.order_by('-reputation')[:9])
     leaderboardUsers = User.objects.order_by('-reputation')

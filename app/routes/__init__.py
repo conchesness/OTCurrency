@@ -6,3 +6,4 @@ from .about import *
 from .users import *
 from .login import *
 from .scripts import *
+from .gibberish import *

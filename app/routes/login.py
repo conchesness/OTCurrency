@@ -1,6 +1,6 @@
 import requests
 from app.routes import app
-from flask import render_template, session, redirect, request, flash
+from flask import render_template, session, redirect, request, flash, Markup
 from requests_oauth2.services import GoogleClient
 from requests_oauth2 import OAuth2BearerToken
 from app.Data import User, Transaction
@@ -10,8 +10,8 @@ google_auth = GoogleClient(
     client_id=("1048349222266-n5praijtbm6a7buc893avtvmtr0k301p"
                ".apps.googleusercontent.com"),
     client_secret="gAarFeNq1vKtGXaxo96FS5H0",
-    # redirect_uri="http://localhost:5000/oauth2callback"
-    redirect_uri="http://otcurrency.appspot.com/oauth2callback"
+    redirect_uri="http://localhost:5000/oauth2callback"
+    # redirect_uri="http://otcurrency.appspot.com/oauth2callback"
     # "http://localhost:5000/oauth2callback"
     # "https://computerinv-216303.appspot.com/oauth2callback"
 )

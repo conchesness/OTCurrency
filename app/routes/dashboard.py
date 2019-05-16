@@ -1,10 +1,11 @@
 from app.routes import app
-from flask import render_template, session, request, redirect, flash
+from flask import render_template, session, request, redirect, flash, Markup
 from app.Forms import GiveForm
 from app.Data import Transaction, User
 import requests
 from datetime import datetime
 from mongoengine.queryset.visitor import Q
+from .gibberish import *
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
@@ -21,54 +22,58 @@ def dashboard():
         if request.method == 'POST' and form.validate():
             validTransaction = False
 
+            if classifygibberish(form.reason.data) > 80 or len(form.reason.data) < 50:
+                flash(f"Please write a better reason for giving {form.amount.data} coin to {form.recipient.data}. It can't be gibberish and it must be at least 50 characters.")
+                return redirect("/dashboard")
+
+            if form.recipient.data == "The Undertaker":
+                flash(Markup("<img width='200' src='/static/undertaker.jpg'>&nbsp;&nbsp;You can't give to The Undertaker. The Undertaker laughs at you. Haaaa haaaa haaa"))
+                return redirect("/dashboard")
+
             # check that giver isn't giving money to themselves
-            if (currUser.name != form.recipient.data):
-                validTransaction = True
-            else:
+            if (currUser.name == form.recipient.data):
                 flash(f"hey {currUser.fname}, you can't give it to yourself.")
+                return redirect("/dashboard")
+
+            if int(form.amount.data) < 6 and int(form.amount.data) > 0:
+                pass
+            else:
+                flash('You can only give between 0 and 5')
                 return redirect("/dashboard")
 
             # check if giver has enough money
             if (int(myWallet) >= int(form.amount.data)):
-                validTransaction = True
+                pass
             else:
                 flash(f"You can't send {form.amount.data} when you only have {myWallet}")
                 return redirect("/dashboard")
 
-            if int(form.amount.data < 6):
-                validTransaction = True
-            else:
-                flash('The maximum you can give is 5')
-                return redirect("/dashboard")
-
             if currUser.gaveto != form.recipient.data:
-                validTransaction = True
+                pass
             else:
                 flash("You can't give to the same person twice in a row.")
                 return redirect("/dashboard")
 
-        # if valid
-            if validTransaction:
-                # get giver data
-                currUser.reload()
+            # Transaction passed all checks
+            # get giver data
+            currUser.reload()
+            # get recipient data
+            recipientUser = User.objects.get(name=form.recipient.data)
+            # create the transaction
+            newTransaction = Transaction()
+            newTransaction.giver = currUser
+            newTransaction.recipient = recipientUser
+            newTransaction.amount = form.amount.data
+            newTransaction.reason = form.reason.data
+            newTransaction.category = form.category.data
+            newTransaction.createdate = datetime.now()
+            newTransaction.save()
 
-                # get recipient data
-                recipientUser = User.objects.get(name=form.recipient.data)
+            #load currUser
+            currUser.update(gaveto=form.recipient.data)
 
-                # create the transaction
-                newTransaction = Transaction()
-                newTransaction.giver = currUser
-                newTransaction.recipient = recipientUser
-                newTransaction.amount = form.amount.data
-                newTransaction.reason = form.reason.data
-                newTransaction.category = form.category.data
-                newTransaction.createdate = datetime.now()
-                newTransaction.save()
-
-                currUser.update(gaveto=form.recipient.data)
-
-                flash(f"You successfully sent {form.amount.data} currency to {form.recipient.data}")
-                return redirect("/dashboard")
+            flash(f"You successfully sent {form.amount.data} currency to {form.recipient.data}")
+            return redirect("/dashboard")
 
         # Update session and other variables
         currUser.reload()
