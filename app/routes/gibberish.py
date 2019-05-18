@@ -77,6 +77,8 @@ def classifygibberish(text):
 
 @app.route('/gibberishscript')
 def gibberish():
+    if not session.get("access_token"):
+        return redirect("/oauth2callback")
     transactions=Transaction.objects()
     for transaction in transactions:
         reason=transaction.reason
@@ -85,6 +87,6 @@ def gibberish():
             flash(f'{gibberish}: {reason}')
     return render_template('scripts.html')
 
-def gibberish(text):
-    gibberish=classifygibberish(text)
-    return bibber
+# def gibberish(text):
+#     gibberish=classifygibberish(text)
+#     return gibberish

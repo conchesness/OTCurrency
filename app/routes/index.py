@@ -9,6 +9,9 @@ undertaker = User.objects.get(googleid='999999999')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    if not session.get("access_token"):
+        return redirect("/about")
+
     totalMoney=Transaction.objects(Q(giver__ne = undertaker.id) & Q(recipient__ne = undertaker.id)).sum('amount')
     totalTransactions = Transaction.objects(Q(giver__ne = undertaker.id) & Q(recipient__ne = undertaker.id)).count()
     ledgerTransactions=Transaction.objects(Q(giver__ne = undertaker.id) & Q(recipient__ne = undertaker.id))[:20].order_by('-createdate')
@@ -65,6 +68,6 @@ def transvote(transID, vote, dash='notdash'):
 
         transaction.update(push__voters=currUser.pk)
     if dash == "dash":
-        return redirect('/dashboard')
+        return redirect("/dashboard")
     else:
         return redirect("/")

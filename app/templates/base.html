@@ -28,12 +28,7 @@
 
     {% endif %}
     {% endwith %}
-    {% if not session["displayName"] %}
-    Login to see more
-    {% endif %}
-    {% if session["displayName"] %}
       {% block body %}{% endblock %}
-    {% endif %}
   </div>
 </body>
 

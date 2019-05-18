@@ -22,6 +22,8 @@ def users(page=1):
 
 @app.route('/transactions/<userID>')
 def transactionsbyusers(userID):
+    if not session.get("access_token"):
+        return redirect("/oauth2callback")
     received = Transaction.objects(recipient=userID).order_by('-createdate')
     giver = Transaction.objects(giver=userID).order_by('-createdate')
     user = User.objects.get(pk=userID)
@@ -30,6 +32,8 @@ def transactionsbyusers(userID):
 
 @app.route('/userstartswith/<alpha>')
 def userstartswith(alpha):
+    if not session.get("access_token"):
+        return redirect("/oauth2callback")
     alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     letters = []
     for letter in alphabet:
@@ -47,8 +51,7 @@ def userstartswith(alpha):
 @app.route('/deleteuser/<userID>/<deleteConfirmed>')
 def deleteUser(userID,deleteConfirmed='nada'):
     if not session.get("access_token"):
-        flash('You are not logged in.')
-        return redirect(url_for('login'))
+        return redirect("/oauth2callback")
     else:
         currUser=User.objects.get(pk=userID)
         if deleteConfirmed == 'nada':

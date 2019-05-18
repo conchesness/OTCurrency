@@ -33,6 +33,7 @@
         <hr>
         <ul class="list-group">
           {% for transaction in ledgerTransactions %}
+          <a name="{{loop.index}}"></a> 
           <li class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1">
@@ -54,8 +55,8 @@
             </p>
 
 
-              <small><a href="/transvote/{{transaction.id}}/up"><img width="15" src="/static/tup.png"></a> {% if transaction.upvote %}({{transaction.upvote}}){% endif %}
-                <a href="/transvote/{{transaction.id}}/down"><img width="15" src="/static/tdown.png"></a> {% if transaction.downvote %}({{transaction.downvote}}){% endif %}
+              <small><a href="/transvote/{{transaction.id}}/up#{{loop.index}}"><img width="15" src="/static/tup.png"></a> {% if transaction.upvote %}({{transaction.upvote}}){% endif %}
+                <a href="/transvote/{{transaction.id}}/down#{{loop.index}}"><img width="15" src="/static/tdown.png"></a> {% if transaction.downvote %}({{transaction.downvote}}){% endif %}
 
               <br>
                 {% if transaction.createdate %}
