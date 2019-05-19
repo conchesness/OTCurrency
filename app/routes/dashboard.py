@@ -1,7 +1,7 @@
 from app.routes import app
 from flask import render_template, session, request, redirect, flash
-from .Forms import GiveForm
-from .Classes import Transaction, User
+from app.Forms import GiveForm
+from app.Data import Transaction, User
 import requests
 
 @app.route('/dashboard', methods=['GET', 'POST'])

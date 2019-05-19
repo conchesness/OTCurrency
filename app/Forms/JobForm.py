@@ -1,10 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, IntegerField, TextAreaField
-from app.routes.Classes import User
-
+from app.Data import User
 from flask import session
-from app.routes.Classes import User
-
 # full_name = session["displayName"]
 
 class JobForm(FlaskForm):

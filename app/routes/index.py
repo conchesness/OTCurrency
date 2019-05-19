@@ -3,7 +3,7 @@ from app.routes import app
 from flask import render_template, session, redirect, request, flash
 from requests_oauth2.services import GoogleClient
 from requests_oauth2 import OAuth2BearerToken
-from .Classes import User, Transaction
+from app.Data import User, Transaction
 from collections import Counter
 
 google_auth = GoogleClient(

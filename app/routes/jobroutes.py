@@ -1,7 +1,7 @@
 from app.routes import app
 from flask import render_template, session, request, redirect, flash
-from .Forms import JobForm
-from .Classes import Transaction, User, Job
+from app.Forms import JobForm
+from app.Data import Transaction, User, Job
 import requests
 from datetime import datetime
 

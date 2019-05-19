@@ -1,24 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, IntegerField
-from app.routes.Classes import User
-
-"""
-CSV VERSION
-"""
-# import pandas as pd
-# import os
-# def getNames():
-#     cd = os.getcwd()
-#     table = pd.read_csv(cd.replace('\\','/')+'/app/routes/Forms/data.csv')
-#     student_names = table['Full Name'].unique()
-#     data = list(zip(student_names, student_names))
-#     return data
-
-"""
-DATABASE VERSION
-"""
+from app.Data import User
 from flask import session
-from app.routes.Classes import User
+from app.Data import User
 
 # full_name = session["displayName"]
 
