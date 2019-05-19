@@ -4,16 +4,12 @@
 <div class="container">
   <div class='jumbotron'>
     <div class="row justify-content-center">
-      <h1>Jobs</h1>
-    </div>
-    <div class="row justify-content-center">
-      <a href="/newjob">New Job</a>
+      <h1>{{job.title}}</h1>
     </div>
   </div>
 </div>
 <table class="table">
   <tr><th> </th><th>Requested by</th><th>Created</th><th>Title</th><th>Hours</th><th>Description</th></tr>
-  {% for job in allJobs %}
   <tr>
     <td>
       {% if session['displayName'] == job.requestedby.name %}
@@ -22,11 +18,10 @@
     </td>
     <td>{{ job.requestedby.name }}</td>
     <td>{{ job.createdatetime }}</td>
-    <td><a href="/job/{{job.id}}">{{ job.title }}</a></td>
+    <td>{{ job.title }}</td>
     <td>{{ job.hours }}</td>
     <td>{{ job.desc }}</td>
   </tr>
-  {% endfor %}
 </table>
 
 {% endblock %}

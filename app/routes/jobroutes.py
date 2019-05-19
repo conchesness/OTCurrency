@@ -11,6 +11,13 @@ def jobs():
 
     return render_template('jobs.html', allJobs=allJobs)
 
+@app.route('/job/<jobID>')
+def job(jobID):
+    job = Job.objects.get(pk=jobID)
+
+    return render_template('job.html', job=job)
+
+
 @app.route('/newjob', methods=['GET', 'POST'])
 def newjob():
     form = JobForm()
