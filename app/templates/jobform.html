@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<form method=post>
+  {% if form.errors %}
+        <ul class="errors">
+            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                {% for error in field_errors %}
+                    <li>{{ form[field_name].label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+  {{ form.hidden_tag() }}
+  <div class="form-group">
+  {{ form.title.label }}<br />
+  {{ form.title(class="form-control") }}
+  </div>
+  <div class="form-group">
+  {{ form.category.label }}<br />
+  {{ form.category(class="form-control") }}
+  </div>
+  <div class="form-group">
+  {{ form.difficulty.label }}<br />
+  {{ form.difficulty(class="form-control") }}
+  </div>
+  <div class="form-group">
+  {{ form.desc.label }}<br />
+  {{ form.desc(class="form_control", cols=70, rows="4") }}
+  </div>
+  {{form.submit(class="btn btn-primary")}}
+</form>
+
+
+
+{% endblock %}
