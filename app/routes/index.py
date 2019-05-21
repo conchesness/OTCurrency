@@ -1,16 +1,26 @@
 import requests
 from app.routes import app
 from flask import render_template, session, redirect, request, flash
+from requests_oauth2.services import GoogleClient
+from requests_oauth2 import OAuth2BearerToken
 from app.Data import User, Transaction
 from collections import Counter
 from mongoengine.queryset.visitor import Q
 
 undertaker = User.objects.get(googleid='999999999')
+google_auth = GoogleClient(
+    client_id=("1048349222266-n5praijtbm6a7buc893avtvmtr0k301p"
+               ".apps.googleusercontent.com"),
+    client_secret="gAarFeNq1vKtGXaxo96FS5H0",
+    redirect_uri="http://localhost:5000/oauth2callback"
+    # redirect_uri="http://otcurrency.appspot.com/oauth2callback"
+)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if not session.get("access_token"):
         return redirect("/about")
+    ledgerTransactions = list(Transaction.objects[:9])[::-1]
 
     totalMoney=Transaction.objects(Q(giver__ne = undertaker.id) & Q(recipient__ne = undertaker.id)).sum('amount')
     totalTransactions = Transaction.objects(Q(giver__ne = undertaker.id) & Q(recipient__ne = undertaker.id)).count()
@@ -34,6 +44,8 @@ def index():
 @app.route('/transvote/<transID>/<vote>/<dash>')
 @app.route('/transvote/<transID>/<vote>')
 def transvote(transID, vote, dash='notdash'):
+    if not session.get("access_token"):
+        return redirect("/oauth2callback")
     transaction = Transaction.objects.get(pk=transID)
     currUser = User.objects.get(googleid=session['googleID'])
 

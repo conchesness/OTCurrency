@@ -7,7 +7,7 @@
       <h1>{{job.title}}</h1>
     </div>
     <div class="row justify-content-left">
-      {% if session['googleid'] == job.requestedby.googleid %}
+      {% if session['googleID'] == job.requestedby.googleid %}
         <a href="/editjob/{{ job.pk }}">Edit</a>&nbsp; |&nbsp; <a href="/deletejob/{{ job.pk }}">Delete</a>
       {% endif %}
     </div>
@@ -18,11 +18,11 @@
       <div class="row justify-content-left">
         Claimed by {{ job.claimedby.name }}
       </div>
-      {% if job.claimedby.googleid == session.googleid %}
+      {% if job.claimedby.googleid == session['googleID'] %}
         <a href="/volunteer/{{ job.id }}/1"><button class="btn btn-primary">Unvolunteer</button></a>
       {% endif %}
     {% else %}
-      {% if job.requestedby.googleid != session['googleid'] %}
+      {% if job.requestedby.googleid != session['googleID'] %}
         <a href="/volunteer/{{ job.id }}"><button class="btn btn-primary">Volunteer</button></a>
       {% endif %}
     {% endif %}

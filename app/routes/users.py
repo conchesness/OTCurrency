@@ -6,6 +6,8 @@ import requests
 @app.route('/users')
 @app.route('/users/<page>')
 def users(page=1):
+    if not session.get("access_token"):
+        return redirect("/oauth2callback")
     alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     letters = []
     for letter in alphabet:

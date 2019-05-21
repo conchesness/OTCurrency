@@ -83,15 +83,17 @@ def volunteer(jobID, un="0"):
     if not session.get("access_token"):
         return redirect("/oauth2callback")
 
-    volunteer=User.objects.get(googleid=session["googleid"])
+
     job=Job.objects.get(pk=jobID)
+    volunteer=User.objects.get(googleid=session["googleID"])
+
 
     if un == "0":
-        if volunteer.googleid == session['googleid']:
+        if volunteer.googleid == job.requestedby.id:
             flash(f"You can't volunteer for a job that you created")
             return redirect(f'/job/{job.id}')
         job.update(claimedby=volunteer.id)
-    elif un == "1" and job.claimedby.googleid == session['googleid']:
+    elif un == "1" and job.claimedby.googleid == session['googleID']:
         job.update(claimedby=None)
         return redirect('/jobs')
 

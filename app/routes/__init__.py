@@ -7,3 +7,4 @@ from .users import *
 from .login import *
 from .scripts import *
 from .gibberish import *
+from .jobroutes import *

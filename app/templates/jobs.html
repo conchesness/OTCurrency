@@ -7,7 +7,7 @@
       <h1>Jobs</h1>
     </div>
     <div class="row justify-content-center">
-      <a href="/newjob">New Job</a>
+      <a href="/newjob"><button class="btn btn-primary">New Job</button></a>
     </div>
   </div>
 </div>
@@ -16,14 +16,14 @@
   {% for job in allJobs %}
   <tr>
     <td><a href="/job/{{job.id}}">{{ job.title }}</a></td>
-    <td>{{ job.requestedby.name }}</td>
     <td>{{ job.createdatetime.strftime("%m/%d/%Y at %H:%M:%S") }}</td>
+    <td>{{ job.requestedby.name }}</td>
     <td>{{ job.difficulty[:1] }}</td>
     <td>
       {% if job.claimedby %}
         {{ job.claimedby.name }}
       {% else %}
-        {% if job.requestedby.googleid != session['googleid'] %}
+        {% if job.requestedby.googleid != session['googleID'] %}
         <a href="/volunteer/{{ job.id }}">
           <button class="btn btn-primary">Volunteer</button>
         </a>
@@ -31,7 +31,7 @@
       {% endif %}
     </td>
     <td>
-      {% if session['googleid'] == job.requestedby.googleid %}
+      {% if session['googleID'] == job.requestedby.googleid %}
         <a href="/editjob/{{ job.pk }}">Edit</a>&nbsp;|&nbsp;<a href="/deletejob/{{ job.pk }}">Delete</a>&nbsp;
       {% endif %}
     </td>

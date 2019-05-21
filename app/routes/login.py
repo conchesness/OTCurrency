@@ -39,6 +39,7 @@ def login():
     # probably need to store the unique googleID string in the User table
 
     # If the user exists, update sme stuff
+
     try:
         editUser = User.objects.get(name=session["displayName"])
         session["wallet"] = editUser.wallet
@@ -51,7 +52,7 @@ def login():
                         image=session["image"],
                         fname=data['name']['givenName'],
                         lname=data['name']['familyName'])
-        flash(f'{session["displayName"]} successfully logged in to an existing account.')
+        flash(f'{editUser.googleid} successfully logged in to an existing account.')
         return redirect("/")
     except:
         # if the user does not exists, create it
