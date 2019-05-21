@@ -6,6 +6,8 @@ import requests
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
+    if not session.get("access_token"):
+        return redirect("/oauth2callback")
     form = GiveForm.new()
 
     #if request.method == 'POST' and form.validate():

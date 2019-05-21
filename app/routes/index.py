@@ -16,6 +16,8 @@ google_auth = GoogleClient(
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    if not session.get("access_token"):
+        return redirect("/about")
     ledgerTransactions = list(Transaction.objects[:9])[::-1]
 
     # get totalmoney
@@ -39,6 +41,8 @@ def index():
 
 @app.route('/transvote/<transID>/<vote>')
 def transvote(transID,vote):
+    if not session.get("access_token"):
+        return redirect("/oauth2callback")
     transaction = Transaction.objects.get(pk=transID)
     for user in User.objects:
         if user.name == session["displayName"]:
@@ -98,6 +102,7 @@ def login():
     # Save Necessary variables
     session["displayName"] = data["displayName"]
     session["image"] = data["image"]["url"]
+    session["googleid"] = data["id"]
 
     user = User()
 
