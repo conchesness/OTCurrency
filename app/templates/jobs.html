@@ -31,7 +31,7 @@
       {% endif %}
     </td>
     <td>
-      {% if session['googleID'] == job.requestedby.googleid %}
+      {% if session['googleID'] == job.requestedby.googleid or session['role'] == 'admin' %}
         <a href="/editjob/{{ job.pk }}">Edit</a>&nbsp;|&nbsp;<a href="/deletejob/{{ job.pk }}">Delete</a>&nbsp;
       {% endif %}
     </td>

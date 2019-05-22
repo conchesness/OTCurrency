@@ -3,7 +3,7 @@ from app.routes import app
 from flask import render_template, session, redirect, request, flash, Markup
 from requests_oauth2.services import GoogleClient
 from requests_oauth2 import OAuth2BearerToken
-from app.Data import User, Transaction
+from app.Data import User, Transaction, Role
 from datetime import datetime
 
 google_auth = GoogleClient(
@@ -39,25 +39,22 @@ def login():
     # probably need to store the unique googleID string in the User table
 
     # If the user exists, update sme stuff
-
     try:
-        editUser = User.objects.get(name=session["displayName"])
-        session["wallet"] = editUser.wallet
-        session["reputation"] = editUser.reputation
+        currUser = User.objects.get(googleid=session["googleID"])
+        session['role'] = currUser.role.name
         # next lines inject some google values in to the User table. This code will only be needed
         # for updates eventually as the same values are created for new users.
-        editUser.reload()
-        editUser.update(email=data["emails"][0]["value"],
-                        googleid=data["id"],
-                        image=session["image"],
-                        fname=data['name']['givenName'],
-                        lname=data['name']['familyName'])
-        flash(f'{editUser.googleid} successfully logged in to an existing account.')
+        flash(f'{currUser.name} successfully logged in to an existing account.')
         return redirect("/")
     except:
         # if the user does not exists, create it
-
+        teacher=Role.objects.get(name='teacher')
+        student=Role.objects.get(name='student')
         newUser = User()
+        if data["emails"][0]["value"][:1] == 's':
+            newUser.role = student
+        else:
+            newUser.role = teacher
         newUser.name = session["displayName"]
         newUser.image = session["image"]
         newUser.email = data["emails"][0]["value"]
@@ -70,6 +67,7 @@ def login():
         newUser.save()
         flash("New User created! Welcome. ")
         newUser.reload()
+        session['role'] = newUser.role.name
         # This creates a new transaction giving 10 to the New User (from the newUser)
 
         # Giver is Stephen Wright

@@ -8,13 +8,6 @@ from collections import Counter
 from mongoengine.queryset.visitor import Q
 
 undertaker = User.objects.get(googleid='999999999')
-google_auth = GoogleClient(
-    client_id=("1048349222266-n5praijtbm6a7buc893avtvmtr0k301p"
-               ".apps.googleusercontent.com"),
-    client_secret="gAarFeNq1vKtGXaxo96FS5H0",
-    redirect_uri="http://localhost:5000/oauth2callback"
-    # redirect_uri="http://otcurrency.appspot.com/oauth2callback"
-)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

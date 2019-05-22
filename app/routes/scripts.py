@@ -1,6 +1,6 @@
 from app.routes import app
 from flask import render_template, session, redirect, request, flash, url_for
-from app.Data import User, Transaction
+from app.Data import User, Transaction, Role
 
 
 # @app.route('/fandlname')
@@ -16,6 +16,25 @@ from app.Data import User, Transaction
 #             editUser.update(fname=fname,lname=lname)
 #
 #     return render_template('scripts.html')
+
+# @app.route('/addrole')
+# def addrole():
+#     if not session.get("access_token"):
+#         return redirect(url_for('login'))
+#     teacher=Role.objects.get(name='teacher')
+#     student=Role.objects.get(name='student')
+#     users=User.objects()
+#     for user in users:
+#         if user.email and user.email[:1] == 's':
+#             user.update(role=student.id)
+#         elif user.email and user.email[:1] != 's':
+#             user.update(role=teacher.id)
+#         user.reload()
+#         flash(f'{user.name} email is {user.email} role is {user.role.name}')
+#
+#
+#     return render_template('scripts.html')
+
 
 @app.route('/deletenegtrans')
 def deletenegtrans():

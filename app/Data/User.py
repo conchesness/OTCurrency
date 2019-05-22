@@ -1,5 +1,6 @@
 from mongoengine import Document, StringField, IntField, ReferenceField
 import flask_mongoengine as mgo
+from .Role import Role
 
 class User(mgo.Document):
     name = StringField(unique=True)
@@ -13,3 +14,4 @@ class User(mgo.Document):
     image = StringField()
     googleid = StringField()
     gaveto = StringField()
+    role = ReferenceField(Role)

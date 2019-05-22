@@ -1,7 +1,7 @@
 from app.routes import app
 from flask import render_template, session, request, redirect, flash, Markup
 from app.Forms import GiveForm
-from app.Data import Transaction, User
+from app.Data import Transaction, User, Role
 import requests
 from datetime import datetime
 from mongoengine.queryset.visitor import Q

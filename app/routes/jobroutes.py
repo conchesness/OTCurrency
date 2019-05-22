@@ -49,7 +49,7 @@ def editjob(jobID):
     editJob = Job.objects.get(pk=jobID)
 
     if request.method == 'POST' and form.validate_on_submit():
-        if session['displayName'] == editJob.requestedby.name:
+        if session['googleID'] == editJob.requestedby.googleid or currUserObj.role.name == 'admin':
             editJob.reload()
             editJob.update(title=form.title.data, difficulty=form.difficulty.data, desc=form.desc.data)
             flash("Job was edited.")
@@ -70,7 +70,7 @@ def deletejob(jobID):
         return redirect("/oauth2callback")
     currUserObj = User.objects.get(name=session['displayName'])
     deleteJob = Job.objects.get(pk=jobID)
-    if session['displayName'] == deleteJob.requestedby.name:
+    if session['googleID'] == deleteJob.requestedby.googleid or currUserObj.role.name == 'admin':
         deleteJob.delete()
         flash("Job successfully deleted.")
     else:

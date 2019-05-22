@@ -1,5 +1,5 @@
 from mongoengine import Document, StringField, ReferenceField, IntField, SortedListField, BooleanField, DateTimeField
-import mongoengine as mgo
+import flask_mongoengine as mgo
 from datetime import datetime
 from .User import User
 
@@ -7,7 +7,7 @@ from .User import User
 class Transaction(mgo.Document):
     giver = ReferenceField(User)
     recipient = ReferenceField(User)
-    amount = mgo.IntField(required='true')
+    amount = IntField(required='true')
     reason = StringField()
     category = StringField()
     upvote = IntField()
