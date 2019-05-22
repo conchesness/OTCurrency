@@ -17,7 +17,9 @@ class GiveForm(FlaskForm):
     def new(cls):
         # Instantiate the form
         form = cls()
-        recipientChoices = [(row.name, row.name) for row in User.objects()]
+        recipientChoices = [("----","----")]
+        for row in User.objects():
+            recipientChoices.append((row.name, row.name))
         recipientChoices.sort()
         # Update the choices for the agency field
         form.recipient.choices = recipientChoices
