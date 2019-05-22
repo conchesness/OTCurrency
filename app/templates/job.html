@@ -4,7 +4,12 @@
 <div class="container">
   <div class='jumbotron'>
     <div class="row justify-content-left">
-      <h1>{{job.title}}</h1>
+      <h1>{{job.title}}</h1>&nbsp;&nbsp;&nbsp;
+      {% if job.claimedby.googleid == session['googleID'] %}
+        <a href="/volunteer/{{ job.id }}/1"><button class="btn btn-primary">Unvolunteer</button></a>
+      {% elif not job.claimedby and session['googleID'] != job.requestedby.googleid %}
+        <a href="/volunteer/{{ job.id }}"><button class="btn btn-primary">Volunteer</button></a>
+      {% endif %}
     </div>
     <div class="row justify-content-left">
       {% if session['googleID'] == job.requestedby.googleid %}
@@ -18,13 +23,6 @@
       <div class="row justify-content-left">
         Claimed by {{ job.claimedby.name }}
       </div>
-      {% if job.claimedby.googleid == session['googleID'] %}
-        <a href="/volunteer/{{ job.id }}/1"><button class="btn btn-primary">Unvolunteer</button></a>
-      {% endif %}
-    {% else %}
-      {% if job.requestedby.googleid != session['googleID'] %}
-        <a href="/volunteer/{{ job.id }}"><button class="btn btn-primary">Volunteer</button></a>
-      {% endif %}
     {% endif %}
     <div class="row justify-content-left">
       Difficulty: {{ job.difficulty[4:] }}<br>
