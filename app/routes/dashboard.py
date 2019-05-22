@@ -1,7 +1,7 @@
 from app.routes import app
 from flask import render_template, session, request, redirect, flash, Markup
 from app.Forms import GiveForm
-from app.Data import Transaction, User, Role
+from app.Data import Transaction, User, Role, Job
 import requests
 from datetime import datetime
 from mongoengine.queryset.visitor import Q
@@ -89,8 +89,10 @@ def dashboard():
     session["wallet"] = myWallet
     session["reputation"] = given
 
+    jobs = Job.objects( Q(requestedby = currUser.id) | Q(claimedby = currUser.id)).order_by('+createdatetime')
+
     #form.recipient.choices = [(row.name, row.name) for row in User.objects()]
 
     return render_template('dashboard.html', wallet=myWallet, reputation=given,
                             form=form, totalTransactions = numtrans, userTransactions = userTransactions,
-                            user=currUser)
+                            user=currUser, jobs=jobs)
