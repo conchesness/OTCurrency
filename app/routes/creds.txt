@@ -1,0 +1,12 @@
+This files shows what the creds.py file should have in it
+
+from requests_oauth2.services import GoogleClient
+
+google_auth = GoogleClient(
+    client_id="AUniqueIDGivenToYouByGoogle.apps.googleusercontent.com",
+    client_secret="ASecretStringFromGoogle",
+    # for local testing
+    redirect_uri="http://localhost:5000/oauth2callback"
+    # for google apps use
+    # redirect_uri="http://otcurrency.appspot.com/oauth2callback"
+)

@@ -4,17 +4,8 @@ from flask import render_template, session, redirect, request, flash, Markup
 from requests_oauth2.services import GoogleClient
 from requests_oauth2 import OAuth2BearerToken
 from app.Data import User, Transaction, Role
+from app.routes.creds import *
 from datetime import datetime
-
-google_auth = GoogleClient(
-    client_id=("1048349222266-n5praijtbm6a7buc893avtvmtr0k301p"
-               ".apps.googleusercontent.com"),
-    client_secret="gAarFeNq1vKtGXaxo96FS5H0",
-    redirect_uri="http://localhost:5000/oauth2callback"
-    # redirect_uri="http://otcurrency.appspot.com/oauth2callback"
-    # "http://localhost:5000/oauth2callback"
-    # "https://computerinv-216303.appspot.com/oauth2callback"
-)
 
 @app.route('/login')
 def login():
@@ -106,6 +97,10 @@ def google_oauth2callback():
             scope=["profile", "email"],
             response_type="code",
         ))
+    # if you have downloaded this from github it is missing a file called
+    # creds.py at the same level as this file.  That file contains the google
+    # credentials.  Check the creds.txt doc at this level for the format of
+    # that file.
     data = google_auth.get_token(
         code=code,
         grant_type="authorization_code",
