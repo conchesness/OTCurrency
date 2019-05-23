@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
 {% block body %}
-Scripts
+<h1>Scripts</h1>
+{% for user in users %}
+  {{user.name}}
+{% endfor %}
 {% endblock %}

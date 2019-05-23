@@ -3,7 +3,8 @@ import flask_mongoengine as mgo
 from .Role import Role
 
 class User(mgo.Document):
-    name = StringField(unique=True)
+    name = StringField()
+    googleid = StringField(unique=True)
     fname = StringField()
     lname = StringField()
     numtrans = IntField()
@@ -12,6 +13,5 @@ class User(mgo.Document):
     wallet = IntField()
     reputation = IntField()
     image = StringField()
-    googleid = StringField()
     gaveto = StringField()
     role = ReferenceField(Role)

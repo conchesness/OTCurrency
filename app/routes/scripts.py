@@ -2,6 +2,14 @@ from app.routes import app
 from flask import render_template, session, redirect, request, flash, url_for
 from app.Data import User, Transaction, Role
 
+# @app.route('/nogoogid')
+# def nogoogid():
+#     nogoogids=User.objects(googleid=None)
+#     for user in nogoogids:
+#         user.delete()
+#     nogoogids=User.objects(googleid=None)
+#
+#     return render_template('scripts.html', users=nogoogids)
 
 # @app.route('/fandlname')
 # def fandlname():
