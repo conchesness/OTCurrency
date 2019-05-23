@@ -33,6 +33,7 @@ def newjob():
         newJob = Job(requestedby=currUserObj,
                      title=form.title.data,
                      difficulty=form.difficulty.data,
+                     category=form.category.data,
                      desc=form.desc.data,
                      createdatetime=datetime.today())
         newJob.save()
@@ -51,7 +52,7 @@ def editjob(jobID):
     if request.method == 'POST' and form.validate_on_submit():
         if session['googleID'] == editJob.requestedby.googleid or currUserObj.role.name == 'admin':
             editJob.reload()
-            editJob.update(title=form.title.data, difficulty=form.difficulty.data, desc=form.desc.data)
+            editJob.update(title=form.title.data, category=form.category.data, difficulty=form.difficulty.data, desc=form.desc.data)
             flash("Job was edited.")
 
         else:

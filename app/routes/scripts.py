@@ -55,6 +55,8 @@ def updatewallets():
     #update transaction values on user objects
     if not session.get("access_token"):
         return redirect(url_for('login'))
+    if not session['role'] == 'admin':
+        return redirect('/')
     else:
         allUsers=User.objects()
         for user in allUsers:

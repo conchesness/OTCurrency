@@ -25,12 +25,13 @@
   </div>
 </div>
 <table class="table">
-  <tr><th>Title</th><th>Created</th><th>Requested by</th><th>Difficulty</th><th>Claimed By</th><th> </th></tr>
+  <tr><th>Title</th><th>Created</th><th>Requested by</th><th>Category</th><th>Difficulty</th><th>Claimed By</th><th> </th></tr>
   {% for job in allJobs %}
   <tr>
     <td><a href="/job/{{job.id}}">{{ job.title }}</a></td>
-    <td>{{ job.createdatetime.strftime("%m/%d/%Y at %H:%M:%S") }}</td>
+    <td>{{ job.createdatetime.strftime("%m/%d/%Y") }}</td>
     <td>{{ job.requestedby.name }}</td>
+    <td>{{ job.category }}</td>
     <td>{{ job.difficulty[:1] }}</td>
     <td>
       {% if job.claimedby %}
