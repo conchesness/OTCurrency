@@ -14,6 +14,7 @@ def users(page=1):
         if User.objects(lname__istartswith=letter).count() > 0:
             letters.append(letter)
 
+
     paginatedUsers = User.objects.order_by('+lname').paginate(page=int(page),per_page=10)
     if User.objects.count() > 10:
         paginate=1
