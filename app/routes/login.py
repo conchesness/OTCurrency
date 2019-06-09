@@ -7,6 +7,8 @@ from app.Data import User, Transaction, Role
 from app.routes.creds import *
 from datetime import datetime
 
+allowedEmails = ['steve@conches.org', 'akbarpasha@gmail.com']
+
 @app.route('/login')
 def login():
     if not session.get("access_token"):
@@ -18,8 +20,13 @@ def login():
 
     data = r.json()
 
-    if data["domain"] != "ousd.org":
-        return "Please Sign in with your OUSD account"
+    try:
+        data['domain']
+    except:
+        data['domain']='gmail.com'
+    if data["domain"] != "ousd.org" and data["emails"][0]["value"] not in allowedEmails:
+        flash(f"{data['emails'][0]['value']} please Sign in with an OUSD account")
+        return redirect("/about")
 
     # Save some session variables
     session["displayName"] = data["displayName"]
